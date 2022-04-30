@@ -1,8 +1,7 @@
-import { parseISO } from "date-fns";
-import { Router } from "express";
-import { CreateAppointment } from "../controllers/CreateAppointment";
-import { prismaClient } from "../database/prismaClient";
-
+import parseISO from 'date-fns/parseISO';
+import { Router } from 'express';
+import CreateAppointment from '../controllers/CreateAppointment';
+import prismaClient from '../database/prismaClient';
 
 const appointmentsRouter = Router();
 
@@ -12,8 +11,7 @@ appointmentsRouter.get('/', async (request, response) => {
   return response.json(appointments);
 });
 
-
-appointmentsRouter.post("/", async (request, response) => {
+appointmentsRouter.post('/', async (request, response) => {
   try {
     const { provider, date } = request.body;
 
@@ -32,5 +30,4 @@ appointmentsRouter.post("/", async (request, response) => {
   }
 });
 
-
-export { appointmentsRouter };
+export default appointmentsRouter;

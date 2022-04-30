@@ -1,15 +1,15 @@
-import { startOfHour, parseISO } from "date-fns";
+import { startOfHour } from 'date-fns';
 
-import { prismaClient } from "../database/prismaClient";
-import AppointmentsRepository from "../repositories/AppointmentRepository";
+import prismaClient from '../database/prismaClient';
+
+import AppointmentsRepository from '../repositories/AppointmentRepository';
 
 interface Request {
   provider: string;
   date: Date;
 }
 
-
-export class CreateAppointment {
+export default class CreateAppointment {
   async handle({ date, provider }: Request) {
     const appointmentsRepository = new AppointmentsRepository();
 
@@ -19,14 +19,14 @@ export class CreateAppointment {
 
     if (await findAppointmentInSameDate) {
       throw Error('Error: time conflict');
-       }
-    
+    }
+
     const appointment = await prismaClient.appointments.create({
       data: {
         provider,
         date: hora,
       },
-    });    
+    });
 
     return appointment;
   }
